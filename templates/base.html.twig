@@ -3,17 +3,54 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
+        
         {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            {% block navbar %}
+                <header class="mb-3">
+                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+                        <div class="container">
+                            {# <a class="navbar-brand"   asp-action="Index"><img src="~/logo.png"></a> #}
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="navbar-collapse collapse d-sm-inline-flex">
+                                <ul class="navbar-nav ml-auto flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" id="nav-index">Головна</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" id="nav-service">Послуги</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" id="nav-news">Новини</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" id="nav-about">Про нас</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" id="nav-gallery">Галерея</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" id="nav-contact">Контакти</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+            {% endblock %}
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
+        {% endblock %}
     </body>
 </html>
