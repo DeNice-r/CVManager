@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}CVManager{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -17,31 +17,56 @@
                 <header class="mb-3">
                     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
                         <div class="container">
-                            {# <a class="navbar-brand"   asp-action="Index"><img src="~/logo.png"></a> #}
+                            <a class="navbar-brand" href="/"><img src="logo.png" style="width: 30px; height: 30px;"></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="navbar-collapse collapse d-sm-inline-flex">
-                                <ul class="navbar-nav ml-auto flex-grow-1">
+                                <ul class="navbar-nav flex-grow-1">
+                                    {% if is_granted("ROLE_USER") %}
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" id="nav-index">Головна</a>
+                                        <a class="nav-link text-dark" href="stats">Статистика</a>
+                                    </li>
+                                    {% endif %}
+                                    {% if is_granted("ROLE_COMPANY") %}
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="profile">Профіль</a>
+                                    </li>
+                                    {% endif %}
+                                    {#
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark">Послуги</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" id="nav-service">Послуги</a>
+                                        <a class="nav-link text-dark">Новини</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" id="nav-news">Новини</a>
+                                        <a class="nav-link text-dark">Про нас</a>
+                                    </li> #}
+                                    {% if is_granted("ROLE_SUPER_ADMIN") %}
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/lucky">Lucky number</a>
+                                    </li>
+                                    {% endif %}
+                                    <li class="nav-item ms-auto">
+                                    </li>
+                                    {# All items below will be right-sided #}
+                                    {% if is_granted("ROLE_AUTHORIZED") %}
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/manage">Управління резюме</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" id="nav-about">Про нас</a>
+                                        <a class="nav-link text-dark" href="/logout">Вийти</a>
+                                    </li>
+                                    {% else %}
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/login">Увійти</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" id="nav-gallery">Галерея</a>
+                                        <a class="nav-link text-dark" href="/register">Зареєструватися</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" id="nav-contact">Контакти</a>
-                                    </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
@@ -49,7 +74,8 @@
                 </header>
             {% endblock %}
             <div class="container">
-                {% block content %}{% endblock %}
+                {% block content %}
+                {% endblock %}
             </div>
         {% endblock %}
     </body>

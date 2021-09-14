@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {% if is_granted('ROLE_USER') %}
+    <h1>Відправлені резюме</h1>
+    <table></table>
+    <h1>Мої резюме</h1>
+    <table></table>
+    {% endif %}
+    {% if is_granted('ROLE_COMPANY') %}
+    <h1>Отримані резюме</h1>
+    {% endif %}
+        <table class='table'>
+        </table>
+{% endblock %}

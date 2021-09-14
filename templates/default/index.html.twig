@@ -1,8 +1,15 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    <h1>Index</h1>
-    <p class = "important">
-        This is my first Symfony project.
-    </p>
+    <h1>Компанії, що співпрацюють з нами</h1>
+        <table class="table">
+        {% for item in companies %}
+        <tr>
+            <td>{{ item.getName() }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+    <h2>
+    З нами також {{ users }} користувачів.
+    </h2>
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -29,13 +30,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $roles = [];
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $name;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $representsCompany = false; // False - user; True - company
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $activeCVs = [];
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $additonalInfo = [];
 
     public function getId(): ?int
     {
@@ -78,16 +97,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        if ($this->representsCompany)
+            $roles[] = 'ROLE_COMPANY';
+        else
+            $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): self
     {
-        $this->roles = $roles;
-
+        if(count($roles) == 1 && $roles[0] == 'ROLE_USER')
+            if ($this->representsCompany)
+                $this->roles[] = 'ROLE_COMPANY';
+            else
+                $this->roles[] = 'ROLE_USER';
+        $this->roles = array_unique($this->roles);
         return $this;
     }
 
@@ -101,6 +126,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->name = $name;
         return $this;
     }
+
+    public function getRepresentsCompany(): bool
+    {
+        return $this->representsCompany;
+    }
+
+    public function setRepresentsCompany(bool $isCompany): self
+    {
+        $this->representsCompany = $isCompany;
+        return $this;
+    }
+
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -135,5 +172,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getActiveCVs(): ?array
+    {
+        return $this->activeCVs;
+    }
+
+    public function setActiveCVs(?array $activeCVs): self
+    {
+        $this->activeCVs = $activeCVs;
+
+        return $this;
+    }
+
+    public function getAdditonalInfo(): ?array
+    {
+        return $this->additonalInfo;
+    }
+
+    public function setAdditonalInfo(?array $additonalInfo): self
+    {
+        $this->additonalInfo = $additonalInfo;
+
+        return $this;
     }
 }

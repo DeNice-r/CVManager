@@ -1,0 +1,1 @@
+symfony.exe server:stop
