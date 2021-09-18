@@ -2,13 +2,13 @@
 
 {% block content %}
     <h1>Компанії, що співпрацюють з нами</h1>
-        <table class="table">
+    <table class="table">
         {% for item in companies %}
         <tr>
             <td>{{ item.getName() }}</td>
         </tr>
         {% endfor %}
-        </table>
+    </table>
     <h2>
     З нами також {{ users }} користувачів.
     </h2>

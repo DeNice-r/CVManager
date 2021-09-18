@@ -1,5 +1,22 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    *form*
+    <h4> {{ currentUser.getName() }} </h4>
+    <form class="col-6" method="post" action="profile" accept-charset="UTF-8">
+        <input type="hidden" name="isSubmitted" value="1">
+        <div class="form-group">
+            <label for="website">Вебсайт</label>
+            <input class="form-control" type="text" id="website" name="website" value="{{ currentUser.getAdditionalInfo()['website'] ?? "" }}">
+        </div>
+        <div class="form-group">
+            <label for="address">Адреса</label>
+            <input class="form-control" type="text" id="address" name="address" value="{{ currentUser.getAdditionalInfo()['address'] ?? "" }}">
+        </div>
+        <div class="form-group">
+            <label for="phone">Телефон</label>
+            <input class="form-control" type="text" id="phone" name="phone" value="{{ currentUser.getAdditionalInfo()['phone'] ?? "" }}">
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Зберегти">
+        </div>
+    </form>
 {% endblock %}

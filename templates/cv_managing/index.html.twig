@@ -3,13 +3,82 @@
 {% block content %}
     {% if is_granted('ROLE_USER') %}
     <h1>Відправлені резюме</h1>
-    <table></table>
+    {% if managedCVs %}
+    <table class="table">
+        <tr>
+            <th>Назва</th>
+            <th>Посада</th>
+            <th>Текст</th>
+            <th>Компанія</th>
+            <th>Відправлено</th>
+        </tr>
+        {% for item in managedCVs %}
+        <tr>
+            <td>{{ item.getCVName() }}</td>
+            <td>{{ item.getCVPosition() }}</td>
+            <td>{{ item.getCVText() }}</td>
+            <td>{{ item.getCompanyName() }}</td>
+            <td>{{ item.getSentOn().format("j.n.Y H:i:s") }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <h5>Тут нічого немає :(</h5>
+    {% endif %}
     <h1>Мої резюме</h1>
-    <table></table>
+    {% if myCVs %}
+    <table class="table">
+        <tr>
+            <th>Назва</th>
+            <th>Посада</th>
+            <th>Текст</th>
+            <th>Дата створення</th>
+            <th>Дата редагування</th>
+            <th></th>
+        </tr>
+        {% for item in myCVs %}
+        <tr>
+            <td>{{ item.getName() }}</td>
+            <td>{{ item.getPosition() }}</td>
+            <td>{{ item.getText() }}</td>
+            <td>{{ item.getCreationDate().format("j.n.Y H:i:s") }}</td>
+            <td>{{ item.getEditedOn().format("j.n.Y H:i:s") }}</td>
+            <td>
+                <a class="btn btn-success" href="send?cvid={{ item.getId() }}">Надіслати</a>
+                <a class="btn btn-warning" href="edit?cvid={{ item.getId() }}">Редагувати</a>
+                <a class="btn btn-danger" href="delete?cvid={{ item.getId() }}">Видалити</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <h5>Тут нічого немає :(</h5>
+    {% endif %}
+    <a class="btn btn-success" href="edit">Створити нове</a>
     {% endif %}
     {% if is_granted('ROLE_COMPANY') %}
     <h1>Отримані резюме</h1>
+    {% if managedCVs %}
+    <table class="table">
+        <tr>
+            <th>Назва</th>
+            <th>Посада</th>
+            <th>Текст</th>
+            <th>Відправлено</th>
+            <th></th>
+        </tr>
+        {% for item in managedCVs %}
+        <tr>
+        <td>{{ item.getCVName() }}</td>
+        <td>{{ item.getCVPosition() }}</td>
+        <td>{{ item.getCVText() }}</td>
+        <td>{{ item.getSentOn().format("j.n.Y H:i:s") }}</td>
+            <td><a class="btn btn-success" href="react?id={{ item.getId() }}&reaction=1">Прийняти</a><a class="btn btn-danger" href="react?id={{ item.getId() }}&reaction=0">Відхилити</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <h5>Тут нічого немає :(</h5>
     {% endif %}
-        <table class='table'>
-        </table>
+    {% endif %}
 {% endblock %}

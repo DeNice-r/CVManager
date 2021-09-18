@@ -52,6 +52,8 @@ security:
     access_control:
         - { path: "^/manage", roles: ROLE_AUTHORIZED }
         - { path: '^/profile', roles: ROLE_COMPANY }
-        - { path: '^/admin', roles: ROLE_SUPER_ADMIN }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: "^/react", roles: ROLE_COMPANY }
+        - { path: "^/edit", roles: ROLE_USER }
+        - { path: "^/send", roles: ROLE_USER }
+        - { path: "^/stats", roles: ROLE_USER }
+        # - { path: '^/admin', roles: ROLE_SUPER_ADMIN }

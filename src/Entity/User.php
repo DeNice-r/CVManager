@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="json", nullable=true)
      */
-    private $additonalInfo = [];
+    private $additionalInfo = [];
 
     public function getId(): ?int
     {
@@ -97,22 +97,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        if ($this->representsCompany)
+        if ($this->representsCompany) {
             $roles[] = 'ROLE_COMPANY';
-        else
+        } else {
             $roles[] = 'ROLE_USER';
+        }
 
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): self
     {
-        if(count($roles) == 1 && $roles[0] == 'ROLE_USER')
-            if ($this->representsCompany)
+        if (1 == count($roles) && 'ROLE_USER' == $roles[0]) {
+            if ($this->representsCompany) {
                 $this->roles[] = 'ROLE_COMPANY';
-            else
+            } else {
                 $this->roles[] = 'ROLE_USER';
+            }
+        }
         $this->roles = array_unique($this->roles);
+
         return $this;
     }
 
@@ -124,6 +128,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -135,9 +140,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRepresentsCompany(bool $isCompany): self
     {
         $this->representsCompany = $isCompany;
+
         return $this;
     }
-
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -179,21 +184,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->activeCVs;
     }
 
+    public function addActiveCV(?int $cvreactionId): self
+    {
+        if(!isset($this->activeCVs))
+            $this->activeCVs = array();
+        $this->activeCVs[] = $cvreactionId;
+        return $this;
+    }
+
+    public function removeActiveCV(?int $cvreactionId): self
+    {
+        if(!isset($this->activeCVs))
+            return $this;
+        if (($key = array_search($cvreactionId, $this->activeCVs)) !== false) {
+            unset($this->activeCVs[$key]);
+        }
+        return $this;
+    }
+
     public function setActiveCVs(?array $activeCVs): self
     {
         $this->activeCVs = $activeCVs;
 
         return $this;
     }
+    
 
-    public function getAdditonalInfo(): ?array
+    public function getAdditionalInfo(): ?array
     {
-        return $this->additonalInfo;
+        return $this->additionalInfo;
     }
 
-    public function setAdditonalInfo(?array $additonalInfo): self
+    public function setAdditionalInfo(?array $additionalInfo): self
     {
-        $this->additonalInfo = $additonalInfo;
+        $this->additionalInfo = $additionalInfo;
 
         return $this;
     }

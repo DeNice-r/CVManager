@@ -1,5 +1,62 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    *CV stats*
+    <h1>Статистика резюме</h1>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Версія</th>
+            <th>Відповідь</th>
+        </tr>
+        {% for id, val1 in stats %}
+        {% for ver, val2 in val1 %}
+        <tr>
+            <td>{{ id }}</td>
+            <td>{{ ver }}</td>
+            <td>
+                <span class="text-success">{{ val2[1] ?? 0 }}</span>
+                <span>{{ val2[-1] ?? 0 }}</span>
+                <span class="text-danger">{{ val2[0] ?? 0 }}</span>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+    </table>
+
+    <h1>Резюме, відправлені за весь час</h1>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Назва</th>
+            <th>Посада</th>
+            <th>Текст</th>
+            <th>Компанія</th>
+            <th>Реакція</th>
+            <th>Дата версії</th>
+            <th>Дата відправки</th>
+            {# <th></th> #}
+        </tr>
+        {% for item in myCVs %}
+        <tr>
+            <td>{{ item.getcvId() }}</td>
+            <td>{{ item.getCVName() }}</td>
+            <td>{{ item.getCVPosition() }}</td>
+            <td>{{ item.getCVText() }}</td>
+            <td>{{ item.getCompanyName() }}</td>
+            <td>
+                {% if item.getReaction() is same as(null) %}
+                Не перевірено
+                {% else %}
+                   {% if item.getReaction() == 0 %}
+                   <div class="text-danger">Відхилено</div>
+                   {% else %}
+                   <div class="text-success">Прийнято</div>
+                   {% endif %}
+                {% endif %}
+            </td>
+            <td>{{ item.getCVVersion().format("j.n.Y H:i:s") }}</td>
+            <td>{{ item.getSentOn().format("j.n.Y H:i:s") }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

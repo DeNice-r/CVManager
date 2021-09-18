@@ -19,14 +19,14 @@ class UserType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('name', TextType::class)
-            ->add("representsCompany", CheckboxType::class, [
-                'label' => "I represent a company",
-                'required' => false
+            ->add('representsCompany', CheckboxType::class, [
+                'label' => 'I represent a company',
+                'required' => false,
                 ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Confirm Password']
+                'second_options' => ['label' => 'Confirm Password'],
             ])
         ;
     }

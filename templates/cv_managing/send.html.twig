@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {% if is_granted('ROLE_USER') %}
+    <h1>  </h1>
+    <table class="table">
+        <tr>
+            <th> Назва </th>
+            <th> Сайт </th>
+            <th> Адреса </th>
+            <th> Телефон </th>
+            <th></th>
+        </tr>
+        {% for item in companies %}
+        <tr>
+            <td>{{ item.getName() }}</td>
+            <td>{{ item.getAdditionalInfo()['website'] ?? "-" }}</td>
+            <td>{{ item.getAdditionalInfo()['address'] ?? "-" }}</td>
+            <td>{{ item.getAdditionalInfo()['phone'] ?? "-" }}</td>
+            <td><a class="btn btn-success" href="send?cvid={{ cvid }}&companyid={{ item.getId() }}">Надіслати</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}

@@ -9,7 +9,7 @@
 const $ = require('jquery');
 require('@popperjs/core');
 require('bootstrap')
-// loads the jquery package from node_modules
+    // loads the jquery package from node_modules
 
 // import the function from greet.js (the .js extension is optional)
 // ./ (or ../) means to look for a local file

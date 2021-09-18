@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\CVReactions;
+use App\Entity\CVReaction;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method CVReactions|null find($id, $lockMode = null, $lockVersion = null)
- * @method CVReactions|null findOneBy(array $criteria, array $orderBy = null)
- * @method CVReactions[]    findAll()
- * @method CVReactions[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method CVReaction|null find($id, $lockMode = null, $lockVersion = null)
+ * @method CVReaction|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CVReaction[]    findAll()
+ * @method CVReaction[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CVReactionsRepository extends ServiceEntityRepository
+class CVReactionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CVReactions::class);
+        parent::__construct($registry, CVReaction::class);
     }
 
     // /**
-    //  * @return CVReactions[] Returns an array of CVReactions objects
+    //  * @return CVReaction[] Returns an array of CVReaction objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CVReactionsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?CVReactions
+    public function findOneBySomeField($value): ?CVReaction
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
